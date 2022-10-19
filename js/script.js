@@ -12,6 +12,7 @@ Dopo che sono stati inseriti i 5 numeri, il software dice quanti e quali dei num
 */
 const sec = 1000;
 let timer = 10;
+let handleClick = 0;
 
 
 // associo una variabile al pulsante play
@@ -28,18 +29,18 @@ const numeriIndovinati = [];
 
 
 //funzione che mi genera 5 numeri casuali tra 1 e 99
-const generatoreNumeri = function (x){
-    while(numeriGenerati.length < x){
-        const numeriDaIndovinare = randomNumber(1,99);
-        if(!numeriGenerati.includes(numeriDaIndovinare)){
+const generatoreNumeri = function (x) {
+    while (numeriGenerati.length < x) {
+        const numeriDaIndovinare = randomNumber(1, 99);
+        if (!numeriGenerati.includes(numeriDaIndovinare)) {
             numeriGenerati.push(numeriDaIndovinare);
-        } 
+        }
     }
 }
 
 //funzione che mi genera i box per i numeri generati
-const generatoreBox = function (y){
-    for(let i = 0; i < y; i++){
+const generatoreBox = function (y) {
+    for (let i = 0; i < y; i++) {
         const boxNumeriGenerati = document.createElement('div');
         boxNumeriGenerati.classList.add('box');
         myContainerHTML.appendChild(boxNumeriGenerati);
@@ -49,7 +50,7 @@ const generatoreBox = function (y){
 // funzione che inserisce i numeri generati nei box
 const inserireNumeri = function (z) {
     const squares = document.querySelectorAll('.box');
-    for(let i = 0; i < z; i++){
+    for (let i = 0; i < z; i++) {
         squares[i].innerHTML = `
         ${numeriGenerati[i]}
         `
@@ -57,7 +58,7 @@ const inserireNumeri = function (z) {
 }
 
 // funzione che mi genere il conteiner del countdown
-const generatoreCountDownContainer = function (){
+const generatoreCountDownContainer = function () {
     const countContainer = document.createElement('div');
     countContainer.classList.add('countdown-container');
     myContainerHTML.appendChild(countContainer);
@@ -65,9 +66,9 @@ const generatoreCountDownContainer = function (){
 }
 
 // funzione per generare i numeri del countdown
-const numCountDown = function(div) {
+const numCountDown = function (div) {
     timer--;
-    div.innerHTML = timer;  
+    div.innerHTML = timer;
 }
 
 //---------------------------------------------------------------
@@ -75,24 +76,68 @@ const numCountDown = function(div) {
 const indovinareNumeri = function () {
     //qui genero il div
     const containerInput = document.createElement('div');
-    containerInput.setAttribute('id','container-input');
-    console.log(containerInput)
+    containerInput.setAttribute('id', 'container-input');
+    
     myContainerHTML.appendChild(containerInput);
 
     //qui genero l'input
     const input = document.createElement('input');
-    input.setAttribute('type','number');
+    input.setAttribute('type', 'number');
     containerInput.appendChild(input);
 
     // qui genero il bottone
     const btnCerca = document.createElement('button');
     btnCerca.innerText = 'Cerca';
-    btnCerca.classList.add('btn-cerca','btn','btn-dark');
+    btnCerca.classList.add('btn-cerca', 'btn', 'btn-dark');
     containerInput.appendChild(btnCerca);
 
     // funzione che gestisce il comportamento del bottone btnCerca
     const cerca = function () {
+        //tengo il conto del numero delle volte che l'utente clicca il bottone
+        handleClick++;
+
+        //inserisco in una variabile il numero inserito dall'utente
+        let tentativo = parseInt(input.value);
         input.value = '';
+
+        //se il numero è presente tra i numeri generati lo pusho nell'array dei numeri indovinati
+        if (numeriGenerati.includes(tentativo)) {
+            numeriIndovinati.push(tentativo);
+            console.log(numeriIndovinati)
+        }
+
+        //raggiunti i 5 click svuoto il div
+        if(handleClick == numeriDaGenerare){
+            clearDiv(containerInput);
+            const containerRisultato = document.createElement('div');
+            containerRisultato.setAttribute('id', 'start-container');
+            myContainerHTML.appendChild(containerRisultato)
+            
+
+            //genero la scritto Game Over
+            const gameOver = document.createElement('h1');
+            gameOver.classList.add('text-center','my-4');
+            gameOver.innerText = 'Game Over!';
+            containerRisultato.appendChild(gameOver); 
+
+            //genero la scritta che dirà quante parole sono state indovinate
+            const text = document.createElement('h3');
+            text.innerHTML = `
+            Hai indovinato ${numeriIndovinati.length} numeri
+        
+            `
+            containerRisultato.appendChild(text); 
+
+
+            //ciclo sulla lunghezza dell'array dei numeri indovinati e li stampo nel div del risultato
+            for(let i = 0; i < numeriIndovinati.length ; i++){
+                let numIndovinato = document.createElement('h2');
+                numIndovinato.innerHTML = numeriIndovinati[i];
+                containerRisultato.appendChild(numIndovinato);
+            }
+
+
+        }
     }
 
     btnCerca.addEventListener('click', cerca);
@@ -113,7 +158,7 @@ const play = function () {
 
     // creo i contenitori per i numeri
     generatoreBox(numeriDaGenerare);
-    
+
     // inserisco i numeri nei contenitori
     inserireNumeri(numeriDaGenerare);
 
@@ -127,8 +172,8 @@ const play = function () {
     // console.log(countContainerHTML)
 
     //inserisco i numeri del countdown nel contenitore
-    setInterval(numCountDown, sec, countContainerHTML )
-    
+    setInterval(numCountDown, sec, countContainerHTML)
+
 
     //dopo 10 secondi svuoto di nuovo my-container
     setTimeout("clearDiv(myContainerHTML)", timer * sec);
@@ -136,11 +181,11 @@ const play = function () {
     //dopo 10 secondi faccio apparire il container per l'input
     setTimeout("indovinareNumeri()", timer * sec);
 
-    
 
 
 
-    
+
+
 
 }
 
