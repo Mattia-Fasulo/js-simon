@@ -136,6 +136,18 @@ const indovinareNumeri = function () {
                 containerRisultato.appendChild(numIndovinato);
             }
 
+            //se l'utente ha indovinato tutti i numeri faccio uscire la scritta win altrimenti la scritta loose
+            if(numeriGenerati.length == numeriIndovinati.length){
+                const win = document.createElement('h3');
+                win.innerHTML = 'Hai Vinto!';
+                containerRisultato.appendChild(win);
+            }
+            else {
+                const loose = document.createElement('h3');
+                loose.innerHTML = 'Hai Perso!';
+                containerRisultato.appendChild(loose);
+            }
+
 
         }
     }
