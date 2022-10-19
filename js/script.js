@@ -71,96 +71,7 @@ const numCountDown = function (div) {
     div.innerHTML = timer;
 }
 
-//---------------------------------------------------------------
-//funzione che genera l'input numerico e ne gestisce il funzionamento
-const indovinareNumeri = function () {
-    //qui genero il div
-    const containerInput = document.createElement('div');
-    containerInput.setAttribute('id', 'container-input');
-    
-    myContainerHTML.appendChild(containerInput);
-
-    //qui genero l'input
-    const input = document.createElement('input');
-    input.setAttribute('type', 'number');
-    containerInput.appendChild(input);
-
-    // qui genero il bottone
-    const btnCerca = document.createElement('button');
-    btnCerca.innerText = 'Cerca';
-    btnCerca.classList.add('btn-cerca', 'btn', 'btn-dark');
-    containerInput.appendChild(btnCerca);
-
-    // funzione che gestisce il comportamento del bottone btnCerca
-    const cerca = function () {
-        //tengo il conto del numero delle volte che l'utente clicca il bottone
-        handleClick++;
-
-        //inserisco in una variabile il numero inserito dall'utente
-        let tentativo = parseInt(input.value);
-        input.value = '';
-
-        //se il numero è presente tra i numeri generati lo pusho nell'array dei numeri indovinati
-        if (numeriGenerati.includes(tentativo)) {
-            numeriIndovinati.push(tentativo);
-            console.log(numeriIndovinati)
-        }
-
-        //raggiunti i 5 click svuoto il div
-        if(handleClick == numeriDaGenerare){
-            clearDiv(containerInput);
-            const containerRisultato = document.createElement('div');
-            containerRisultato.setAttribute('id', 'start-container');
-            myContainerHTML.appendChild(containerRisultato)
-            
-
-            //genero la scritto Game Over
-            const gameOver = document.createElement('h1');
-            gameOver.classList.add('text-center','my-4');
-            gameOver.innerText = 'Game Over!';
-            containerRisultato.appendChild(gameOver); 
-
-            //genero la scritta che dirà quante parole sono state indovinate
-            const text = document.createElement('h3');
-            text.innerHTML = `
-            Hai indovinato ${numeriIndovinati.length} numeri
-        
-            `
-            containerRisultato.appendChild(text); 
-
-
-            //ciclo sulla lunghezza dell'array dei numeri indovinati e li stampo nel div del risultato
-            for(let i = 0; i < numeriIndovinati.length ; i++){
-                let numIndovinato = document.createElement('h2');
-                numIndovinato.innerHTML = numeriIndovinati[i];
-                containerRisultato.appendChild(numIndovinato);
-            }
-
-            //se l'utente ha indovinato tutti i numeri faccio uscire la scritta win altrimenti la scritta loose
-            if(numeriGenerati.length == numeriIndovinati.length){
-                const win = document.createElement('h3');
-                win.innerHTML = 'Hai Vinto!';
-                containerRisultato.appendChild(win);
-            }
-            else {
-                const loose = document.createElement('h3');
-                loose.innerHTML = 'Hai Perso!';
-                containerRisultato.appendChild(loose);
-            }
-
-
-        }
-    }
-
-    btnCerca.addEventListener('click', cerca);
-}
-
-//-------------------------------------------------------------
-
-
-
-
-
+// funzione che gestisce il funzionamento del tasto play
 const play = function () {
     // svuoto il mio div
     clearDiv(myContainerHTML);
@@ -193,12 +104,92 @@ const play = function () {
     //dopo 10 secondi faccio apparire il container per l'input
     setTimeout("indovinareNumeri()", timer * sec);
 
-
-
-
-
-
-
 }
+
+//---------------------------------------------------------------
+//funzione che genera l'input numerico e ne gestisce il funzionamento
+const indovinareNumeri = function () {
+    //qui genero il div
+    const containerInput = document.createElement('div');
+    containerInput.setAttribute('id', 'container-input');
+
+    myContainerHTML.appendChild(containerInput);
+
+    //qui genero l'input
+    const input = document.createElement('input');
+    input.setAttribute('type', 'number');
+    containerInput.appendChild(input);
+
+    // qui genero il bottone
+    const btnCerca = document.createElement('button');
+    btnCerca.innerText = 'Cerca';
+    btnCerca.classList.add('btn-cerca', 'btn', 'btn-dark');
+    containerInput.appendChild(btnCerca);
+
+    // funzione che gestisce il comportamento del bottone btnCerca
+    const cerca = function () {
+        //tengo il conto del numero delle volte che l'utente clicca il bottone
+        handleClick++;
+
+        //inserisco in una variabile il numero inserito dall'utente
+        let tentativo = parseInt(input.value);
+        input.value = '';
+
+        //se il numero è presente tra i numeri generati lo pusho nell'array dei numeri indovinati
+        if (numeriGenerati.includes(tentativo)) {
+            numeriIndovinati.push(tentativo);
+            console.log(numeriIndovinati)
+        }
+
+        //raggiunti i 5 click svuoto il div
+        if (handleClick == numeriDaGenerare) {
+            clearDiv(containerInput);
+            const containerRisultato = document.createElement('div');
+            containerRisultato.setAttribute('id', 'start-container');
+            myContainerHTML.appendChild(containerRisultato)
+
+
+            //genero la scritto Game Over
+            const gameOver = document.createElement('h1');
+            gameOver.classList.add('text-center', 'my-4');
+            gameOver.innerText = 'Game Over!';
+            containerRisultato.appendChild(gameOver);
+
+            //genero la scritta che dirà quante parole sono state indovinate
+            const text = document.createElement('h3');
+            text.innerHTML = `
+            Hai indovinato ${numeriIndovinati.length} numeri
+        
+            `
+            containerRisultato.appendChild(text);
+
+
+            //ciclo sulla lunghezza dell'array dei numeri indovinati e li stampo nel div del risultato
+            for (let i = 0; i < numeriIndovinati.length; i++) {
+                let numIndovinato = document.createElement('h2');
+                numIndovinato.innerHTML = numeriIndovinati[i];
+                containerRisultato.appendChild(numIndovinato);
+            }
+
+            //se l'utente ha indovinato tutti i numeri faccio uscire la scritta win altrimenti la scritta loose
+            if (numeriGenerati.length == numeriIndovinati.length) {
+                const win = document.createElement('h3');
+                win.innerHTML = 'Hai Vinto!';
+                containerRisultato.appendChild(win);
+            }
+            else {
+                const loose = document.createElement('h3');
+                loose.innerHTML = 'Hai Perso!';
+                containerRisultato.appendChild(loose);
+            }
+
+
+        }
+    }
+
+    btnCerca.addEventListener('click', cerca);
+}
+
+//-------------------------------------------------------------
 
 btnPlayHTML.addEventListener('click', play);
