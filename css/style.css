@@ -43,12 +43,13 @@ body {
 }
 
 li {
+  font-size: 20px;
   margin: 5px 0;
 }
 
 #play-btn {
   width: 100px;
-    margin-top: 90px;
+    margin-top: 40px;
     box-shadow: rgba(30, 21, 21, 0.315) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
     border: none;
 }
