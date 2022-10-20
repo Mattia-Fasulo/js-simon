@@ -141,7 +141,7 @@ const indovinareNumeri = function () {
         let tentativo = parseInt(input.value);
         input.value = '';
 
-        //se il numero è presente tra i numeri generati lo pusho nell'array dei numeri indovinati
+        //se il numero è presente tra i numeri generati e non è stato già pushato lo pusho nell'array dei numeri indovinati
         if (numeriGenerati.includes(tentativo) && !numeriIndovinati.includes(tentativo)) {
             numeriIndovinati.push(tentativo);
             console.log(numeriIndovinati)
@@ -171,9 +171,9 @@ const indovinareNumeri = function () {
 
 
             //ciclo sulla lunghezza dell'array dei numeri indovinati e li stampo nel div del risultato
-            for (let i = 0; i < numeriIndovinati.length; i++) {
+            for (let value of numeriIndovinati) {
                 let numIndovinato = document.createElement('h2');
-                numIndovinato.innerHTML = numeriIndovinati[i];
+                numIndovinato.innerHTML = value;
                 containerRisultato.appendChild(numIndovinato);
             }
 
