@@ -65,11 +65,7 @@ const generatoreCountDownContainer = function () {
 
 }
 
-// funzione per generare i numeri del countdown
-const numCountDown = function (div) {
-    timer--;
-    div.innerHTML = timer;
-}
+
 
 // funzione che gestisce il funzionamento del tasto play
 const play = function () {
@@ -92,10 +88,20 @@ const play = function () {
     //associo il container del countdown ad una variabile e gli stampo 10 all'interno
     const countContainerHTML = document.querySelector(".countdown-container")
     countContainerHTML.innerHTML = timer;
-    // console.log(countContainerHTML)
+    
+
+    // funzione per generare i numeri del countdown
+    const numCountDown = function (div) {
+        timer--;
+        div.innerHTML = timer;
+        console.log(timer)
+        if (timer == 0) {
+            clearInterval(countDownIntervall);
+        }
+    }
 
     //inserisco i numeri del countdown nel contenitore
-    setInterval(numCountDown, sec, countContainerHTML)
+    const countDownIntervall = setInterval(numCountDown, sec, countContainerHTML)
 
 
     //dopo 10 secondi svuoto di nuovo my-container
@@ -136,7 +142,7 @@ const indovinareNumeri = function () {
         input.value = '';
 
         //se il numero è presente tra i numeri generati lo pusho nell'array dei numeri indovinati
-        if (numeriGenerati.includes(tentativo)) {
+        if (numeriGenerati.includes(tentativo) && !numeriIndovinati.includes(tentativo)) {
             numeriIndovinati.push(tentativo);
             console.log(numeriIndovinati)
         }
@@ -173,12 +179,12 @@ const indovinareNumeri = function () {
 
             //se l'utente ha indovinato tutti i numeri faccio uscire la scritta win altrimenti la scritta loose
             if (numeriGenerati.length == numeriIndovinati.length) {
-                const win = document.createElement('h3');
+                const win = document.createElement('h2');
                 win.innerHTML = 'Hai Vinto!';
                 containerRisultato.appendChild(win);
             }
             else {
-                const loose = document.createElement('h3');
+                const loose = document.createElement('h2');
                 loose.innerHTML = 'Hai Perso!';
                 containerRisultato.appendChild(loose);
             }
