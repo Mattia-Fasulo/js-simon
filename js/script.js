@@ -112,7 +112,7 @@ const play = function () {
 
 }
 
-//---------------------------------------------------------------
+//-------------------------------------------------------------
 //funzione che genera l'input numerico e ne gestisce il funzionamento
 const indovinareNumeri = function () {
     //qui genero il div
