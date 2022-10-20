@@ -35,6 +35,10 @@ console.log(parolaGirata);
 
 
 
-
+// for( let value of class){
+//     for (let key of class){
+//         console.log (key + ' : ' + value[key])
+//     }
+// }
 
 
